@@ -1,0 +1,54 @@
+-------------------------------------------------------------------------------
+Test set: org.jack.unittestweblayers.api.JackControllerWebTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 0.109 s <<< FAILURE! - in org.jack.unittestweblayers.api.JackControllerWebTest
+getJackShouldReturnAJackObject  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.postgresql.util.PSQLException: 
+ERROR: relation "hibernate_sequence" does not exist
+  Position: 17
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+
+postJackShouldReturnAJackObject  Time elapsed: 0.001 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.postgresql.util.PSQLException: 
+ERROR: relation "hibernate_sequence" does not exist
+  Position: 17
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+
+nonExistentJackShouldReturnA404  Time elapsed: 0.001 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.postgresql.util.PSQLException: 
+ERROR: relation "hibernate_sequence" does not exist
+  Position: 17
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+
+postDuplicateJackShouldReturnAClientError  Time elapsed: 0.002 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.postgresql.util.PSQLException: 
+ERROR: relation "hibernate_sequence" does not exist
+  Position: 17
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+
+getJackShouldReturnAJackObjectAnd200  Time elapsed: 0.001 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+Caused by: org.postgresql.util.PSQLException: 
+ERROR: relation "hibernate_sequence" does not exist
+  Position: 17
+	at org.jack.unittestweblayers.api.JackControllerWebTest.<init>(JackControllerWebTest.java:32)
+
