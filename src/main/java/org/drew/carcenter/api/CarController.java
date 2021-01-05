@@ -1,5 +1,7 @@
 package org.drew.carcenter.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.drew.carcenter.data.models.Car;
 import org.drew.carcenter.data.models.User;
@@ -26,20 +28,22 @@ import java.util.Optional;
 public class CarController
 {
     private final CarService carService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public CarController(CarService carService)
     {
         this.carService = carService;
+        this.objectMapper = new ObjectMapper();
     }
 
     @PostMapping("/cars")
-    public ResponseEntity<String> createCar(@RequestBody CarDTO params)
+    public ResponseEntity<String> createCar(@RequestBody CarDTO params) throws JsonProcessingException
     {
         try
         {
             Car car = carService.addCar(params);
-            return new ResponseEntity<>(car.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(CarDTO.fromEntity(car)), HttpStatus.OK);
         }
         catch (UserNotFoundException e)
         {
@@ -48,12 +52,12 @@ public class CarController
     }
 
     @PutMapping("/cars/{carId}")
-    public ResponseEntity<String> updateCar(@RequestBody CarDTO params, @PathVariable long carId)
+    public ResponseEntity<String> updateCar(@RequestBody CarDTO params, @PathVariable long carId) throws JsonProcessingException
     {
         try
         {
             Car updatedCar = carService.updateCar(params, carId);
-            return new ResponseEntity<>(updatedCar.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(CarDTO.fromEntity(updatedCar)), HttpStatus.OK);
         }
         catch (CarNotFoundException e)
         {

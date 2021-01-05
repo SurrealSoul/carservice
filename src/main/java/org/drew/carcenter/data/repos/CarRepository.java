@@ -15,4 +15,6 @@ public interface CarRepository extends CrudRepository<Car, Long>
     void deleteById(Long id);
 
     List<Car> findCarsByUser(User user);
+
+    Car findCarById(Long id);
 }

@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService
 
     @Override
     public User getUserById(Long id) throws UserNotFoundException {
-        Optional<User> user = userRepository.findById(id);
+        User user = userRepository.findUserById(id);
 
-        if (user.isPresent())
+        if (user != null)
         {
-            return user.get();
+            return user;
         }
         else
         {
@@ -58,8 +58,9 @@ public class UserServiceImpl implements UserService
     @Override
     public User updateUser(UserDTO user, long userId) throws UserNotFoundException, UserExistException
     {
+        User currentUser = userRepository.findUserById(userId);
         // check if the user id is already present, do not update if there does not exist a user
-        if (!userRepository.findById(userId).isPresent())
+        if (currentUser == null)
         {
             throw new UserNotFoundException("user not found");
         }

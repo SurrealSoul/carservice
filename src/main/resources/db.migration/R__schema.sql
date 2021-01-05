@@ -37,13 +37,13 @@ alter table car
 	add constraint car_pk
 		primary key (id);
 
-CREATE TYPE appointment_status AS ENUM ('pending', 'approved', 'in_progress', 'completed');
+CREATE TYPE status AS ENUM ('pending', 'approved', 'in_progress', 'completed');
 
 create table appointment
 (
 	id serial not null,
 	date_time timestamp not null,
-	status appointment_status not null default 'pending',
+	status status not null default 'pending',
 	service varchar(255) not null
 );
 
@@ -72,8 +72,8 @@ alter table car
 	add user_id int;
 
 alter table car
-    add constraint car_user_id_fk
-        foreign key (user_id) references user;
+	add constraint car_user_id_fk
+		foreign key (user_id) references "user";
 
-
-
+alter table appointment
+	add price bigint not null;

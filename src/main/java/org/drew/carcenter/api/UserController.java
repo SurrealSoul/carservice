@@ -23,7 +23,6 @@ import java.util.Optional;
 public class UserController
 {
     private final UserService userService;
-    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     public UserController(UserService userService)
@@ -31,11 +30,6 @@ public class UserController
         this.userService = userService;
     }
 
-    /**
-     * Creates a new user
-     * @param params the information required for a user
-     * @return the user object
-     */
     @PostMapping("/users")
     public ResponseEntity<String> createUser(@RequestBody UserDTO params)
     {

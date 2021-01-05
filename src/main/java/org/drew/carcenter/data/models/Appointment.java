@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointment", schema = "public")
 public class Appointment
 {
     @AllArgsConstructor
@@ -23,17 +23,21 @@ public class Appointment
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="date_time")
     private Timestamp dateTime;
+    @Enumerated(EnumType.STRING)
     @Column
     private Status status;
-    @OneToOne
-    @JoinColumn(name = "car_id", nullable = false)
-    private Car car;
+    @Column
+    private String service;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
+    @OneToOne
+    @JoinColumn(name = "car_id", nullable = false)
+    private Car car;
+    @Column
+    private Double price;
 }
