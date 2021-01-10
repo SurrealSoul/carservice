@@ -5,8 +5,7 @@ import lombok.Data;
 import org.drew.carcenter.data.models.User;
 
 @Data
-public class UserDTO
-{
+public class UserDTO {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("first_name")
@@ -20,8 +19,7 @@ public class UserDTO
     @JsonProperty("phone")
     private String phone;
 
-    private static UserDTO fromEntity(User user)
-    {
+    public static UserDTO fromEntity(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());

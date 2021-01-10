@@ -16,17 +16,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-public class HelloWorldControllerMockMvcTest
-{
+public class HelloWorldControllerMockMvcTest {
 
+    private static final String HELLO_WORLD_URL = "/api/v1.0/hello-world";
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String HELLO_WORLD_URL = "/api/v1.0/hello-world";
-
     @Test
-    public void shouldReturnDefaultMessage() throws Exception
-    {
+    public void shouldReturnDefaultMessage() throws Exception {
         this.mockMvc.perform(get(HELLO_WORLD_URL)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string("Hello, World"));
     }

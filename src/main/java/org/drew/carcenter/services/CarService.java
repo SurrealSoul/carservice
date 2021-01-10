@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface CarService
-{
+public interface CarService {
     Car addCar(CarDTO car) throws UserNotFoundException;
 
     void deleteCar(Long id) throws CarNotFoundException;
@@ -19,4 +18,6 @@ public interface CarService
     Car updateCar(CarDTO car, Long id) throws CarNotFoundException, UserNotFoundException;
 
     List<Car> getCarsByUser(User user) throws UserNotFoundException;
+
+    Car getCarById(Long id) throws CarNotFoundException;
 }

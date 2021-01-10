@@ -24,28 +24,18 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class AppointmentServiceImpl implements AppointmentService
-{
-    private final AppointmentRepository appointmentRepository;
-    private final UserRepository userRepository;
-    private final CarRepository carRepository;
-
+public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository,
-                                  CarRepository carRepository)
-    {
-        this.appointmentRepository = appointmentRepository;
-        this.userRepository = userRepository;
-        this.carRepository = carRepository;
-    }
+    private AppointmentRepository appointmentRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CarRepository carRepository;
 
     @Override
-    public Appointment addAppointment(AppointmentDTO appointmentDTO) throws CarNotFoundException, UserNotFoundException
-    {
-        if (userRepository.findById(appointmentDTO.getUserId()).isPresent())
-        {
-            if (carRepository.findById(appointmentDTO.getCarId()).isPresent())
-            {
+    public Appointment addAppointment(AppointmentDTO appointmentDTO) throws CarNotFoundException, UserNotFoundException {
+        if (userRepository.findUserById(appointmentDTO.getUserId()) != null) {
+            if (carRepository.findCarById(appointmentDTO.getCarId()) != null) {
                 // If the appointment has a valid user and car then proceed to persist it
                 Appointment newAppointment = Appointment.builder()
                         .car(carRepository.findCarById(appointmentDTO.getCarId()))
@@ -56,28 +46,20 @@ public class AppointmentServiceImpl implements AppointmentService
                         .status(getStatusFromString(appointmentDTO.getStatus()))
                         .build();
                 return appointmentRepository.save(newAppointment);
-            }
-            else
-            {
+            } else {
                 throw new CarNotFoundException("car not found");
             }
-        }
-        else
-        {
+        } else {
             throw new UserNotFoundException("user not found");
         }
     }
 
     @Override
-    public Appointment getAppointmentById(Long id) throws AppointmentNotFoundException
-    {
+    public Appointment getAppointmentById(Long id) throws AppointmentNotFoundException {
         Appointment appointment = appointmentRepository.findAppointmentById(id);
-        if (appointment != null)
-        {
+        if (appointment != null) {
             return appointment;
-        }
-        else
-        {
+        } else {
             throw new AppointmentNotFoundException("appointment not found");
         }
     }
@@ -86,52 +68,38 @@ public class AppointmentServiceImpl implements AppointmentService
     public List<Appointment> getUsersAppointments(Long userId) throws UserNotFoundException, AppointmentNotFoundException {
         User user = userRepository.findUserById(userId);
 
-        if (user != null)
-        {
-            List<Appointment> appointments = appointmentRepository.getAppointmentByUser(user);
-            if (!appointments.isEmpty())
-            {
+        if (user != null) {
+            List<Appointment> appointments = appointmentRepository.getAppointmentsByUser(user);
+            if (!appointments.isEmpty()) {
                 return appointments;
-            }
-            else
-            {
+            } else {
                 throw new AppointmentNotFoundException("appointments not found");
             }
-        }
-        else
-        {
+        } else {
             throw new UserNotFoundException("user not found");
         }
     }
 
     @Override
-    public void deleteAppointment(Long id) throws AppointmentNotFoundException
-    {
+    public void deleteAppointment(Long id) throws AppointmentNotFoundException {
         Appointment appointment = appointmentRepository.findAppointmentById(id);
 
-        if (appointment != null)
-        {
+        if (appointment != null) {
             appointmentRepository.deleteById(id);
-        }
-        else
-        {
+        } else {
             throw new AppointmentNotFoundException("appointment not found");
         }
     }
 
     @Override
-    public Appointment updateAppointment(AppointmentDTO appointmentDTO, Long appointmentId) throws AppointmentNotFoundException, CarNotFoundException, UserNotFoundException
-    {
+    public Appointment updateAppointment(AppointmentDTO appointmentDTO, Long appointmentId) throws AppointmentNotFoundException, CarNotFoundException, UserNotFoundException {
         Appointment appointment = appointmentRepository.findAppointmentById(appointmentId);
-        if (appointment != null)
-        {
+        if (appointment != null) {
             // since we can change the user and car of an appointment, check if those exist as well
             User user = userRepository.findUserById(appointmentDTO.getUserId());
-            if (user != null)
-            {
+            if (user != null) {
                 Car car = carRepository.findCarById(appointmentDTO.getCarId());
-                if (car != null)
-                {
+                if (car != null) {
                     // build the new appointment
                     Appointment newAppointment = Appointment.builder()
                             .id(appointmentId)
@@ -143,19 +111,13 @@ public class AppointmentServiceImpl implements AppointmentService
                             .dateTime(appointment.getDateTime())
                             .build();
                     return appointmentRepository.save(newAppointment);
-                }
-                else
-                {
+                } else {
                     throw new CarNotFoundException("car not found");
                 }
-            }
-            else
-            {
+            } else {
                 throw new UserNotFoundException("user not found");
             }
-        }
-        else
-        {
+        } else {
             throw new AppointmentNotFoundException("appointment not found");
         }
     }
@@ -172,19 +134,18 @@ public class AppointmentServiceImpl implements AppointmentService
         List<Appointment> appointments =
                 appointmentRepository.findAppointmentsByDateTimeBetweenOrderByPriceDesc(startTimestamp, endTimestamp);
 
-        if (!appointments.isEmpty())
-        {
+        if (!appointments.isEmpty()) {
             return appointments;
-        }
-        else
-        {
+        } else {
             throw new AppointmentNotFoundException("appointments not found for date range");
         }
     }
 
+    /**
+     * Creates a random appointment between 2020-01-01 and 2030-01-01
+     */
     @Override
-    public Appointment addRandomAppointment()
-    {
+    public Appointment addRandomAppointment() {
         String randomString = UUID.randomUUID().toString();
         Double randomPrice = RandomUtils.randomDouble(1, 1_000_000);
 
@@ -223,15 +184,14 @@ public class AppointmentServiceImpl implements AppointmentService
 
     /**
      * Helper function to take a string and convert it to the status enum
+     *
      * @param statusString the status string
      * @return an enum value, defaulting to pending if one could not be found
      */
-    private Appointment.Status getStatusFromString(String statusString)
-    {
+    private Appointment.Status getStatusFromString(String statusString) {
         Appointment.Status statusValue = Appointment.Status.valueOf(statusString);
 
-        if (statusValue == null)
-        {
+        if (statusValue == null) {
             statusValue = Appointment.Status.pending;
         }
 

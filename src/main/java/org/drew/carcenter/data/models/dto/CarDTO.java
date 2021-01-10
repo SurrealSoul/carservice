@@ -5,8 +5,7 @@ import lombok.Data;
 import org.drew.carcenter.data.models.Car;
 
 @Data
-public class CarDTO
-{
+public class CarDTO {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("make")
@@ -18,8 +17,7 @@ public class CarDTO
     @JsonProperty("user_id")
     private Long userId;
 
-    public static CarDTO fromEntity(Car car)
-    {
+    public static CarDTO fromEntity(Car car) {
         CarDTO dto = new CarDTO();
         dto.setId(car.getId());
         dto.setMake(car.getMake());

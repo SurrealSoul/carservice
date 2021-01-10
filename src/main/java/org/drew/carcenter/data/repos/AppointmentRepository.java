@@ -9,15 +9,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface AppointmentRepository extends CrudRepository<Appointment, Long>
-{
+public interface AppointmentRepository extends CrudRepository<Appointment, Long> {
     Appointment save(Appointment appointment);
 
     void deleteById(Long id);
 
     Appointment findAppointmentById(Long id);
 
-    List<Appointment> getAppointmentByUser(User user);
+    List<Appointment> getAppointmentsByUser(User user);
 
     List<Appointment> findAppointmentsByDateTimeBetweenOrderByPriceDesc(Timestamp startDate, Timestamp endDate);
 }

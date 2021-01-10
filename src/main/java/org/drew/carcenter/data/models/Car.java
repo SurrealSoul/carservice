@@ -13,8 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "car", schema = "public")
-public class Car
-{
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -7,8 +7,7 @@ import org.drew.carcenter.data.models.Appointment;
 import java.sql.Timestamp;
 
 @Data
-public class AppointmentDTO
-{
+public class AppointmentDTO {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("status")
@@ -26,11 +25,11 @@ public class AppointmentDTO
 
     /**
      * Creates a DTO object to return to the user from a persisted entity
+     *
      * @param appointment the persisted entity
      * @return a DTO object to return to the user
      */
-    public static AppointmentDTO fromEntity(Appointment appointment)
-    {
+    public static AppointmentDTO fromEntity(Appointment appointment) {
         AppointmentDTO dto = new AppointmentDTO();
         dto.setId(appointment.getId());
         dto.setCarId(appointment.getCar().getId());

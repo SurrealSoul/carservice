@@ -7,8 +7,7 @@ import org.drew.carcenter.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserService
-{
+public interface UserService {
     User getUserById(Long id) throws UserNotFoundException;
 
     User addUser(UserDTO user) throws UserExistException;

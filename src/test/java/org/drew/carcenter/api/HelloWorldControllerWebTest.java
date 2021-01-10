@@ -12,21 +12,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * This kind of test is useful for testing with a web layer (i.e. an integration or functional test)
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloWorldControllerWebTest
-{
+public class HelloWorldControllerWebTest {
+    private static final String HELLO_WORLD_URL = "/api/v1.0/hello-world";
     @LocalServerPort
     private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private static final String HELLO_WORLD_URL = "/api/v1.0/hello-world";
-
     @Test
-    public void helloWorldShouldReturnDefaultMessage()
-    {
+    public void helloWorldShouldReturnDefaultMessage() {
         String response = restTemplate.getForObject("http://localhost:" + port + HELLO_WORLD_URL, String.class);
-        assertEquals( "Hello, World", response);
+        assertEquals("Hello, World", response);
     }
 
 }

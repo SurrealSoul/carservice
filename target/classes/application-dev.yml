@@ -7,3 +7,5 @@ spring:
     url: "jdbc:postgresql://localhost:5432/carservice"
     username: carservice
     password: root # local file for dev work, won't be checked in
+  flyway:
+    enabled: true

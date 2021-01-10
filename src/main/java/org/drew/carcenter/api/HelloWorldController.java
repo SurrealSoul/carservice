@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1.0")
-public class HelloWorldController
-{
+/**
+ * Simple rest controller used to smoke test the application
+ */
+public class HelloWorldController {
     @GetMapping("/hello-world")
     public @ResponseBody
-    String helloWorld()
-    {
+    String helloWorld() {
         return "Hello, World";
     }
 }

@@ -8,28 +8,19 @@ import org.drew.carcenter.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class UserServiceImpl implements UserService
-{
-    final UserRepository userRepository;
-
+public class UserServiceImpl implements UserService {
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
+
 
     @Override
     public User getUserById(Long id) throws UserNotFoundException {
         User user = userRepository.findUserById(id);
 
-        if (user != null)
-        {
+        if (user != null) {
             return user;
-        }
-        else
-        {
+        } else {
             throw new UserNotFoundException("user not found");
         }
     }
@@ -43,12 +34,9 @@ public class UserServiceImpl implements UserService
                 .username(user.getUsername())
                 .phone(user.getPhone())
                 .build();
-        try
-        {
+        try {
             userRepository.save(newUser);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new UserExistException("There is already a user with the same user name");
         }
 
@@ -56,18 +44,13 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User updateUser(UserDTO user, long userId) throws UserNotFoundException, UserExistException
-    {
+    public User updateUser(UserDTO user, long userId) throws UserNotFoundException, UserExistException {
         User currentUser = userRepository.findUserById(userId);
         // check if the user id is already present, do not update if there does not exist a user
-        if (currentUser == null)
-        {
+        if (currentUser == null) {
             throw new UserNotFoundException("user not found");
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 // new details of the user
                 User newUser = User.builder()
                         .id(userId)
@@ -79,9 +62,7 @@ public class UserServiceImpl implements UserService
                         .build();
                 userRepository.save(newUser);
                 return newUser;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw new UserExistException("There is already a user with the same user name");
             }
         }

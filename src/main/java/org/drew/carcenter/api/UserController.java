@@ -1,6 +1,5 @@
 package org.drew.carcenter.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.drew.carcenter.data.models.User;
 import org.drew.carcenter.data.models.dto.UserDTO;
@@ -12,71 +11,56 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1.0")
 @Slf4j
 @Controller
-
-public class UserController
-{
+/**
+ * The rest controller for modifying users
+ */
+public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService)
-    {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> createUser(@RequestBody UserDTO params)
-    {
-        try
-        {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO params) {
+        try {
             User user = userService.addUser(params);
-            return new ResponseEntity<>(user.toString(), HttpStatus.OK);
-        }
-        catch (UserExistException e)
-        {
-            return new ResponseEntity<>(
-                    String.format("A user already exist with the username %s", params.getUsername()),
-                    HttpStatus.METHOD_NOT_ALLOWED);
+            return new ResponseEntity<>(UserDTO.fromEntity(user), HttpStatus.OK);
+        } catch (UserExistException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.METHOD_NOT_ALLOWED,
+                    String.format("A user already exist with the username %s", params.getUsername()), e);
         }
     }
 
     @PutMapping("/users/{userId}")
-    public ResponseEntity<String> updateUser(@RequestBody UserDTO params, @PathVariable long userId)
-    {
-        try
-        {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO params, @PathVariable long userId) {
+        try {
             User updatedUser = userService.updateUser(params, userId);
-            return new ResponseEntity<>(updatedUser.toString(), HttpStatus.OK);
-        }
-        catch (UserNotFoundException e)
-        {
+            return new ResponseEntity<>(UserDTO.fromEntity(updatedUser), HttpStatus.OK);
+        } catch (UserNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (UserExistException e)
-        {
-            return new ResponseEntity<>(
-                    String.format("A user already exist with the username %s", params.getUsername()),
-                    HttpStatus.METHOD_NOT_ALLOWED);
+        } catch (UserExistException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.METHOD_NOT_ALLOWED,
+                    String.format("A user already exist with the username %s", params.getUsername()), e);
         }
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<String> getUserById(@PathVariable long userId)
-    {
-        try
-        {
-            Optional<User> user = Optional.ofNullable(userService.getUserById(userId));
-            return new ResponseEntity<>(user.toString(), HttpStatus.OK);
-        }
-        catch (UserNotFoundException e)
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long userId) {
+        try {
+            User user = userService.getUserById(userId);
+            return new ResponseEntity<>(UserDTO.fromEntity(user), HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
         }
     }
 }

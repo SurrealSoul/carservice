@@ -8,15 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class SmokeTest
-{
+/**
+ * Just a simple smoke test to confirm the application can run
+ */
+public class SmokeTest {
 
     @Autowired
     HelloWorldController helloWorldController;
 
     @Test
-    public void contextLoads()
-    {
+    public void contextLoads() {
         assertNotNull(helloWorldController);
     }
 }

@@ -11,21 +11,11 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 @Table(name = "appointment", schema = "public")
-public class Appointment
-{
-    @AllArgsConstructor
-    @Getter
-    public enum Status {
-        pending,
-        approved,
-        in_progress,
-        completed;
-    }
-
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="date_time")
+    @Column(name = "date_time")
     private Timestamp dateTime;
     @Enumerated(EnumType.STRING)
     @Column
@@ -40,4 +30,13 @@ public class Appointment
     private Car car;
     @Column
     private Double price;
+
+    @AllArgsConstructor
+    @Getter
+    public enum Status {
+        pending,
+        approved,
+        in_progress,
+        completed
+    }
 }

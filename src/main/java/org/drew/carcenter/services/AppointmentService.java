@@ -9,8 +9,7 @@ import org.drew.carcenter.exceptions.UserNotFoundException;
 import java.text.ParseException;
 import java.util.List;
 
-public interface AppointmentService
-{
+public interface AppointmentService {
     Appointment addAppointment(AppointmentDTO appointmentDTO) throws CarNotFoundException, UserNotFoundException;
 
     Appointment getAppointmentById(Long id) throws AppointmentNotFoundException;
