@@ -21,6 +21,8 @@ Then execute the `R__schema.sql` on the database.
 To be completely honest, I do not know the best way to initialize a database for a dev/production environment. I wanted to keep this part flexable as my experience with setting up a database is limited to running an ansible job on an RDS instance.
 When the database needs to evolve, I expect to create a `V1__updateDatabase.sql` and have flyway handle migrations
 
+Testing uses an in memory h2 database.
+
 ## The API
 
 the application has been designed with the following endpoints:
@@ -49,7 +51,6 @@ As mentioned above there are three domain objects for interacting with the api
 
 AppointmentDTO example
 {
-    "id": 1,
     "status": "pending",
     "date_time": "2020-01-01 00:00:00,
     "car_id": 2,
@@ -60,7 +61,6 @@ AppointmentDTO example
 
 CarDTO example
 {
-    "id": 2,
     "make": "landcruiser",
     "model": "toyota",
     "year": "1995",
@@ -69,7 +69,6 @@ CarDTO example
 
 UserDTO example
 {
-    "id": 1,
     "first_name": "drew",
     "last_name": "davis",
     "email": "andrewcdavis0@gmail.com",
