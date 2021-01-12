@@ -37,13 +37,11 @@ alter table car
 	add constraint car_pk
 		primary key (id);
 
-CREATE TYPE status AS ENUM ('pending', 'approved', 'in_progress', 'completed');
-
 create table appointment
 (
 	id serial not null,
 	date_time timestamp not null,
-	status status not null default 'pending',
+	status varchar(255) not null default 'pending',
 	service varchar(255) not null
 );
 

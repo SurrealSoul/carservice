@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.drew.carcenter.services.AppointmentServiceTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s - in org.drew.carcenter.services.AppointmentServiceTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.063 s - in org.drew.carcenter.services.AppointmentServiceTest
